@@ -35,15 +35,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: UserColor.backgroundcolor,
-        // appBar: AppBar(
-        //   backgroundColor: UserColor.backgroundcolor,
-        //   elevation: 0.0,
-        //   centerTitle: true,
-        //   titleTextStyle: Userstyle.headerstyle,
-        //   title: const Text(
-        //     "Update",
-        //   ),
-        // ),
         body: currentuser == null
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,

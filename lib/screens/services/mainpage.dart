@@ -184,9 +184,36 @@ class _MainPageState extends State<MainPage> {
                           Text(
                             "9841167068",
                             style: Userstyle.subtitletilestyle,
-                          )
+                          ),
                         ],
-                      )
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "Cecil Ghimire",
+                        style: Userstyle.subtitletilestyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "cecilghimire@gmail.com",
+                        style: Userstyle.subtitletilestyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.phone,
+                            size: 10.0,
+                            color: Colors.grey,
+                          ),
+                          Text(
+                            "9862342132",
+                            style: Userstyle.subtitletilestyle,
+                          ),
+                        ],
+                      ),
                     ]);
               }
 
