@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "531001121128",
+    "project_id": "ges-b30b1",
+    "storage_bucket": "ges-b30b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531001121128:android:ae2b395b51c8d0682ededd",
+        "android_client_info": {
+          "package_name": "com.geomaticsengineeringsociety.ges"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531001121128-8ap84h9igmst46luo9l2l06lo4gjonoh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geomaticsengineeringsociety.ges",
+            "certificate_hash": "1f5977b1db81f327def86df874ff338766b19319"
+          }
+        },
+        {
+          "client_id": "531001121128-84prjqbhcjop588r6so55mprnojb51qc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9JitgqYDZVOgnPQAfdbqLEM6fwTYlYJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531001121128-84prjqbhcjop588r6so55mprnojb51qc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "531001121128-3gf9fhd45nen0065modifso06mmduejl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
