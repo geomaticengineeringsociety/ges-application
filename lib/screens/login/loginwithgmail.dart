@@ -23,13 +23,13 @@ class _LoginGmailState extends State<LoginGmail> {
           const SizedBox(
             height: 10.0,
           ),
-          Center(
-            child: Image.asset(
-              'ges.png',
-              height: 320.0,
-              width: 300.0,
-            ),
-          ),
+          // Center(
+          //   child: Image.asset(
+          //     'ges.png',
+          //     height: 320.0,
+          //     width: 300.0,
+          //   ),
+          // ),
           const SizedBox(
             height: 10.0,
           ),
