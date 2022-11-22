@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../color and text/style.dart';
 import '../../navigators.dart';
 import '../blogs/addblog.dart';
@@ -30,6 +31,7 @@ class _MainPageState extends State<MainPage> {
   ];
   Widget currentscreen = const Blogs();
   final currentuser = FirebaseAuth.instance.currentUser;
+  final storage = FlutterSecureStorage();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   void _onItemTapped(int index) {
     setState(() {
@@ -307,8 +309,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   void logout() async {
-    await FirebaseAuth.instance
-        .signOut()
-        .then((value) => navigatorpushandremove(context, const Login()));
+    await FirebaseAuth.instance.signOut().then((value) async {
+      await storage.delete(key: 'uid');
+      navigatorpushandremove(context, const Login());
+    });
   }
 }

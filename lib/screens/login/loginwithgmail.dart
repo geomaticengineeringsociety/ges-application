@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../color and text/style.dart';
 import '../../navigators.dart';
 import 'loginlogic.dart';
@@ -61,12 +62,10 @@ class _LoginGmailState extends State<LoginGmail> {
                   backgroundColor: Colors.white,
                   shadowColor: Colors.black),
               onPressed: () {
-                LoginWithMail()
-                    .googlelogin()
-                    .then((value) =>
-                        navigatorpushandremove(context, const UpdateProfile()))
-                    .catchError((onError) {
-                  return null;
+                LoginWithMail().googlelogin().then((value) {
+                  navigatorpushandremove(context, const UpdateProfile());
+                }).catchError((onError) {
+                  notification(context, "Error try another method");
                 });
               },
               icon: const Icon(
