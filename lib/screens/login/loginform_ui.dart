@@ -8,6 +8,7 @@ import 'package:password_strength/password_strength.dart';
 import '../../color and text/style.dart';
 import '../../navigators.dart';
 import 'package:ges/screens/login/signup.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -20,9 +21,18 @@ class _LoginFormState extends State<LoginForm> {
   GlobalKey<FormState> loginform = GlobalKey();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  final storage = FlutterSecureStorage();
   String? email;
   String? password;
   double strength = 0.0;
+  Future<bool> checkLoginStatus() async {
+    String? value = await storage.read(key: 'uid');
+    if (value == null) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -56,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter value";
+                    return "Please enter email";
                   }
                   if (EmailValidator.validate(value) == false) {
                     return "Please enter valid mail";
@@ -84,7 +94,7 @@ class _LoginFormState extends State<LoginForm> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter value";
+                    return "Please enter password";
                   }
                   if (strength < 0.3) {
                     return "Please enter strong password";
@@ -172,6 +182,10 @@ class _LoginFormState extends State<LoginForm> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email!, password: password!)
           .then((value) async {
+        await storage.write(
+          key: 'uid',
+          value: value.user?.uid,
+        );
         navigatorpushandremove(context, const UpdateProfile());
         return value;
       });

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../color and text/style.dart';
 import '../../navigators.dart';
@@ -22,6 +23,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   final currentuser = FirebaseAuth.instance.currentUser;
   CollectionReference aboutyourself =
       FirebaseFirestore.instance.collection('users');
+  final storage = new FlutterSecureStorage();
   // ignore: prefer_typing_uninitialized_variables
   var about;
   // ignore: prefer_typing_uninitialized_variables
@@ -157,7 +159,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor:
                                           UserColor.backgroundcolor),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    storage.write(
+                                        key: 'uid', value: currentuser!.uid);
                                     if (updateform.currentState!.validate()) {
                                       addaboutyourself();
                                       notification(
@@ -204,7 +208,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: UserColor.backgroundcolor),
-                          onPressed: () {
+                          onPressed: () async {
+                            print("UID:${currentuser!.uid}");
+                            await storage.write(
+                                key: 'uid', value: currentuser!.uid);
                             navigatorpushandremove(context, const MainPage());
                           },
                           child: Text(
