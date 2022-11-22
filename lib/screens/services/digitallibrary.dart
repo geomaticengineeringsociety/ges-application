@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../color and text/style.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DigitalLibrary extends StatefulWidget {
@@ -89,7 +90,7 @@ class _DigitalLibraryState extends State<DigitalLibrary> {
   Future openFile({required String url, String? filename}) async {
     var file = await downloadFile(url, filename);
     if (file == null) return null;
-    OpenFile.open(file.path);
+    OpenFilex.open(file.path);
   }
 
   //downoad file
