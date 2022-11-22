@@ -23,7 +23,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   final currentuser = FirebaseAuth.instance.currentUser;
   CollectionReference aboutyourself =
       FirebaseFirestore.instance.collection('users');
-  final storage = new FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
   // ignore: prefer_typing_uninitialized_variables
   var about;
   // ignore: prefer_typing_uninitialized_variables
@@ -209,7 +209,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: UserColor.backgroundcolor),
                           onPressed: () async {
-                            print("UID:${currentuser!.uid}");
                             await storage.write(
                                 key: 'uid', value: currentuser!.uid);
                             navigatorpushandremove(context, const MainPage());
