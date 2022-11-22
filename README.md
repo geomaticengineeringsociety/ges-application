@@ -1,6 +1,6 @@
 # ges
 
-A new Flutter project.
+This project is open source project started by students of Gemoatics Engineering Society.This app will provide students a platform to share their knowledge and to recognize people related to Gemoatics field.There is digital library for students where they can find important documents,reports etc which they can use in their projects.
 
 ## Getting Started
 
@@ -8,9 +8,7 @@ This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Lab:](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook:](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
