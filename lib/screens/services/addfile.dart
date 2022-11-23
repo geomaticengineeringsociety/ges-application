@@ -37,6 +37,20 @@ class _AddFileState extends State<AddFile> {
   UploadTask? task;
   // filename=file!=null?basename(file!.path):"No file Selected";
   @override
+  void initState() {
+    super.initState();
+    titlecontroller.clear();
+    institutioncontroller.clear();
+  }
+
+  @override
+  void dispose() {
+    titlecontroller.dispose();
+    institutioncontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return Scaffold(
