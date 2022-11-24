@@ -93,7 +93,7 @@ class _AddBlogState extends State<AddBlog> {
                   maxLines: null,
                   validator: ((value) {
                     if (value!.length <= 10) {
-                      return "Please update about yourself";
+                      return "Please update your title";
                     }
                     return null;
                   }),
@@ -140,6 +140,9 @@ class _AddBlogState extends State<AddBlog> {
           'photoURL': currentuser!.photoURL
         })
         .then((value) => notification(context, "Sucessfully Added"))
+        .then((value) {
+          Navigator.pop(context);
+        })
         .catchError((onError) {
           notification(context, "Error Occured");
         });

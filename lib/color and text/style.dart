@@ -9,7 +9,6 @@ class UserColor {
 class Userstyle {
   static var headerstyle = TextStyle(
     color: UserColor.textwithbackgroundcolor,
-    fontWeight: FontWeight.bold,
     letterSpacing: 1.0,
     fontSize: 20.0,
   );

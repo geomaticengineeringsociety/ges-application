@@ -61,7 +61,7 @@ class _PeopleState extends State<People> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         data['about'],
-                        style: Userstyle.textstyle,
+                        style: TextStyle(wordSpacing: 1.0),
                         textAlign: TextAlign.center,
                       ),
                     )

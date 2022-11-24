@@ -143,6 +143,11 @@ class _AddFileState extends State<AddFile> {
                   style: Userstyle.textbuttomstyle,
                   textAlign: TextAlign.center,
                 ),
+                Text(
+                  "File Size must be less than 10 MB",
+                  style: Userstyle.textbuttomstyle,
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -151,10 +156,11 @@ class _AddFileState extends State<AddFile> {
                   children: [
                     Text(
                       fileName,
-                      style: Userstyle.textstyle,
                     ),
                     IconButton(
-                        onPressed: selectFile,
+                        onPressed: () {
+                          selectFile(context);
+                        },
                         icon: const Icon(Icons.attach_file))
                   ],
                 ),
@@ -164,9 +170,11 @@ class _AddFileState extends State<AddFile> {
                     onPressed: () {
                       if (fileform.currentState!.validate()) {
                         uploadFile()
-                            .then((value) => notification(
-                                context, "Sucessfully uploaded press back"))
-                            .catchError((onError) {
+                            .then((value) =>
+                                notification(context, "Sucessfully uploaded "))
+                            .then((value) {
+                          Navigator.pop(context);
+                        }).catchError((onError) {
                           notification(context, "Error occured ");
                         });
                       }
@@ -183,15 +191,20 @@ class _AddFileState extends State<AddFile> {
   }
 
   //methods for upload
-  Future selectFile() async {
+  Future selectFile(BuildContext context) async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) {
       return;
     } else {
       final path = result.files.single.path!;
-      setState(() {
-        file = File(path);
-      });
+      File newfile = File(path);
+      if (newfile.lengthSync() > 10000000) {
+        notification(context, "Sorry, please compress this file");
+      } else {
+        setState(() {
+          file = newfile;
+        });
+      }
     }
   }
 

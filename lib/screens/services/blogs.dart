@@ -61,15 +61,25 @@ class _BlogsState extends State<Blogs> {
                   },
                   title: Text(
                     data['title'],
-                    style: Userstyle.textstyle,
+                    style: const TextStyle(fontSize: 15.0, letterSpacing: 0.5),
                   ),
                   subtitle: Text(
                     data['name'],
-                    style: Userstyle.subtitletilestyle,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 179, 179, 179),
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      fontSize: 10.0,
+                    ),
                   ),
                   trailing: Text(
                     data['datetime'],
-                    style: Userstyle.subtitletilestyle,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 179, 179, 179),
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      fontSize: 10.0,
+                    ),
                   ),
                   leading: ClipOval(
                       child: Image.network(
