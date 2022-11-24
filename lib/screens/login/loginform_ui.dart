@@ -115,8 +115,8 @@ class _LoginFormState extends State<LoginForm> {
                 height: 20.0,
               ),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, elevation: 10.0),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
                   onPressed: () {
                     if (loginform.currentState!.validate()) {
                       email = emailcontroller.text;
@@ -128,10 +128,6 @@ class _LoginFormState extends State<LoginForm> {
                     "Login",
                     style: Userstyle.textstyle,
                   )),
-              Text(
-                "OR",
-                style: Userstyle.textstyle,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -194,6 +190,8 @@ class _LoginFormState extends State<LoginForm> {
         messsage("No user found for that email");
       } else if (e.code == 'wrong-password') {
         messsage('Wrong password');
+      } else {
+        messsage("Error occured");
       }
     }
   }

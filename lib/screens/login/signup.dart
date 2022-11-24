@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ges/navigators.dart';
+import 'package:ges/screens/services/firebase_api.dart';
 import '../../color and text/style.dart';
 import 'package:password_strength/password_strength.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -27,13 +32,12 @@ class _SignUpState extends State<SignUp> {
   String? email;
   String? password;
   String? confirmpassword;
-  String photovalue =
-      "https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/304849592_447016570777817_8869922205950282634_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ye2b2NP2duoAX8o34OI&_nc_ht=scontent.fktm8-1.fna&oh=00_AfDoHCz-NWEwbzQFDAxcIunBQaDps0ROFGNSPUbleLHKpg&oe=637CE938";
-  String? photoURL =
-      "https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/304849592_447016570777817_8869922205950282634_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ye2b2NP2duoAX8o34OI&_nc_ht=scontent.fktm8-1.fna&oh=00_AfDoHCz-NWEwbzQFDAxcIunBQaDps0ROFGNSPUbleLHKpg&oe=637CE938";
+  File? imagefile;
   String? name;
   String? about;
   String? institution;
+  String? photoURL;
+  UploadTask? task;
   @override
   void initState() {
     emailcontroller.clear();
@@ -89,18 +93,34 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  width: 100.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(photoURL.toString()),
-                          fit: BoxFit.fill)),
-                ),
+                imagefile == null
+                    ? const Text("No image selected")
+                    : CircleAvatar(
+                        radius: 60.0,
+                        backgroundImage: FileImage(imagefile!),
+                      ),
                 const SizedBox(
                   height: 20.0,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Choose Image",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        pickimage(context);
+                      },
+                      icon: const Icon(
+                        Icons.photo_camera_outlined,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+
                 //-----------------------name text field-------------------------//
                 TextFormField(
                   validator: (value) {
@@ -123,41 +143,12 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       label: Text(
-                        "Name",
+                        "Full Name",
                         textDirection: TextDirection.ltr,
                         style: Userstyle.textstyle,
                       )),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                //-------------------------------photourl text field -------------------------//
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      setState(() {
-                        photoURL = photovalue;
-                      });
-                    }
-                    return null;
-                  },
-                  controller: photourlcontroller,
-                  onChanged: ((value) {
-                    setState(() {
-                      photoURL = photourlcontroller.text;
-                    });
-                  }),
-                  decoration: InputDecoration(
-                      helperText: "Any link with your photo or social profile",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      label: Text(
-                        "Photo Link",
-                        textDirection: TextDirection.ltr,
-                        style: Userstyle.textstyle,
-                      )),
-                ),
+                //-------------------------------photourl text field -------------------------/
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -317,7 +308,6 @@ class _SignUpState extends State<SignUp> {
                       if (signupform.currentState!.validate()) {
                         email = emailcontroller.text;
                         password = passwordcontroller.text;
-                        photoURL = photourlcontroller.text;
                         name = namecontroller.text;
                         institution = institutioncontroller.text;
                         about = aboutcontroller.text;
@@ -336,7 +326,10 @@ class _SignUpState extends State<SignUp> {
 
   void submitinfo() async {
     if (signupform.currentState!.validate()) {
-      if (passwordcontroller.text == passwordconfirmcontroller.text) {
+      if (passwordcontroller.text == passwordconfirmcontroller.text &&
+          imagefile != null &&
+          email != null &&
+          institution != null) {
         try {
           var value = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
@@ -349,11 +342,29 @@ class _SignUpState extends State<SignUp> {
               await FirebaseAuth.instance
                   .signInWithEmailAndPassword(
                       email: email!, password: password!)
-                  .then((value) {
+                  .then((value) async {
+                if (imagefile == null) {
+                  notification(context, "Please Select image");
+                } else {
+                  final destination = 'profiles/$name';
+                  task = FirebaseApi.uploadFile(destination, imagefile!);
+                  setState(() {});
+                  if (task == null) {
+                    notification(context, "Error Occured");
+                  }
+                  final snapshot = await task!.whenComplete(() {});
+                  final urlDownload = await snapshot.ref.getDownloadURL();
+                  setState(() {
+                    photoURL = urlDownload;
+                  });
+                }
+                return value;
+              }).then((value) {
                 var currentuser = FirebaseAuth.instance.currentUser;
                 if (currentuser != null) {
-                  currentuser.updatePhotoURL(photoURL);
                   currentuser.updateDisplayName(name);
+                  currentuser.updateEmail(email!);
+                  currentuser.updatePhotoURL(photoURL);
                   CollectionReference users =
                       FirebaseFirestore.instance.collection('users');
                   users.doc(currentuser.uid.toString()).set({
@@ -400,5 +411,23 @@ class _SignUpState extends State<SignUp> {
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
+  void pickimage(BuildContext context) async {
+    final picker = ImagePicker();
+    // ignore: deprecated_member_use
+    final pickedfile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedfile == null) return;
+    if (pickedfile != null) {
+      final file = File(pickedfile.path);
+      if (file.lengthSync() > 3000000) {
+        notification(context, "photo must be less than 3 MB");
+        return;
+      } else {
+        setState(() {
+          imagefile = file;
+        });
+      }
+    }
   }
 }

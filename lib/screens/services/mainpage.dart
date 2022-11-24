@@ -100,23 +100,15 @@ class _MainPageState extends State<MainPage> {
                       ),
                       Text(
                         data['institution'],
-                        style: Userstyle.textstyle,
                         textAlign: TextAlign.center,
+                        style: Userstyle.subtitletilestyle,
                       ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Icon(Icons.email),
-                          Text(
-                            data['email'],
-                            style: Userstyle.textstyle,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                      Text(data['email'],
+                          textAlign: TextAlign.center,
+                          style: Userstyle.subtitletilestyle),
                       const Divider(
                         color: Colors.grey,
                       ),
@@ -134,11 +126,9 @@ class _MainPageState extends State<MainPage> {
                               icon: const Icon(Icons.edit))
                         ],
                       ),
-                      Text(
-                        data['about'],
-                        style: Userstyle.textstyle,
-                        textAlign: TextAlign.center,
-                      ),
+                      Text(data['about'],
+                          textAlign: TextAlign.center,
+                          style: Userstyle.subtitletilestyle),
                       const SizedBox(
                         height: 10.0,
                       ),

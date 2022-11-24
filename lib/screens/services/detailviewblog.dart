@@ -36,13 +36,14 @@ class _DetailViewState extends State<DetailView> {
               Navigator.pop(context);
             },
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.cancel,
               color: Colors.black,
             )),
         elevation: 0.0,
         backgroundColor: UserColor.backgroundcolor,
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(15.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -73,17 +74,20 @@ class _DetailViewState extends State<DetailView> {
               const SizedBox(
                 height: 40.0,
               ),
-              Text(
-                title,
-                style: Userstyle.blogheaderstyle,
-                textAlign: TextAlign.justify,
+              Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 20.0, letterSpacing: .6),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               Text(
                 description,
-                style: Userstyle.textstyle,
+                style: const TextStyle(wordSpacing: 1.0, letterSpacing: .6),
+                textAlign: TextAlign.center,
               )
             ],
           ),
