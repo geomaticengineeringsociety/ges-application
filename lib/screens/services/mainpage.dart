@@ -269,30 +269,34 @@ class _MainPageState extends State<MainPage> {
 
   Widget? button() {
     if (_selectedIndex == 0) {
-      return FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const AddBlog())));
-        },
-        backgroundColor: Colors.white,
-        child: const Icon(
-          Icons.add,
-          color: Colors.black,
-        ),
-      );
+      return ElevatedButton.icon(
+              onPressed: () => {
+                Navigator.push(context, 
+                MaterialPageRoute(
+                  builder: (context)=> AddBlog(),
+                  ),
+                )
+              },
+              icon: const Icon(Icons.add),  //icon data for elevated button
+                      label: const Text("Add Blog",style: TextStyle(fontSize: 18),), //label text 
+                      style: ElevatedButton.styleFrom(
+                         backgroundColor: const Color.fromARGB(255, 10, 10, 10) //elevated btton background color
+            ));
     }
     if (_selectedIndex == 1) {
-      return FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const AddFile())));
-        },
-        backgroundColor: Colors.white,
-        child: const Icon(
-          Icons.add,
-          color: Colors.black,
-        ),
-      );
+      return ElevatedButton.icon(
+              onPressed: () => {
+                Navigator.push(context, 
+                MaterialPageRoute(
+                  builder: (context)=> AddFile(),
+                  ),
+                )
+              },
+              icon: const Icon(Icons.add),  //icon data for elevated button
+                      label: const Text("Add File",style: TextStyle(fontSize: 18),), //label text 
+                      style: ElevatedButton.styleFrom(
+                         backgroundColor: const Color.fromARGB(255, 10, 10, 10) //elevated btton background color
+            ));
     } else {
       return null;
     }
